@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package todo;
+// todo service to create get and delete todo
+// also used to mark complete todos
+service TodoService {
+    // Create a new Todo item
+    rpc CreateTodo (CreateTodoRequest) returns (TodoResponse);
+
+    // Get all Todo items
+    rpc GetTodos (Empty) returns (GetTodosResponse);
+
+    // Mark a Todo as completed
+    rpc MarkTodoCompleted (MarkTodoRequest) returns (TodoResponse);
+
+    // Delete a Todo item
+    rpc DeleteTodo (DeleteTodoRequest) returns (TodoResponse);
+
+    //Delete all Todos
+    rpc DeleteAllTodos(Empty) returns (DeleteAllTodosResponse);
+}
+// Todo object will conatin information about todo attributes
+message Todo {
+    // todo id
+    int32 id = 1;
+    // todo title
+    string title = 2;
+    // todo description
+    string description = 3;
+    // todo status
+    bool completed = 4;
+}
+// create todo request
+
+// DeleteAllTodosResponse
+message DeleteAllTodosResponse{
+    bool success = 1;
+    string message = 2;
+}
+message CreateTodoRequest {
+    string title = 1;
+    string description = 2;
+}
+// mark todo request
+message MarkTodoRequest {
+    int32 id = 1;
+}
+// delete todo request
+message DeleteTodoRequest {
+    int32 id = 1;
+}
+// todo response
+message TodoResponse {
+    bool success = 1;
+    string message = 2;
+    Todo todo = 3;
+}
+// get todos response
+message GetTodosResponse {
+    repeated Todo todos = 1;
+}
+
+// empty message
+message Empty {}
